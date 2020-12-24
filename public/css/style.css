@@ -1,1 +1,52 @@
 
+* {
+	margin: 0;
+	padding: 0;
+}
+
+body {
+	background-color: white;
+	font-family: 'Roboto Slab', serif;
+}
+
+a.btn_default{
+    background-color: #45e451;
+    color: white;
+    text-decoration: none;
+    padding: 10px;
+    border-radius: 4px;
+    font-size: 18px;
+    letter-spacing: 2px;
+    border: 1px solid #45e451;
+}
+
+a.btn_default:hover{
+    background-color: white;
+    color: #45e451;
+    border: 1px solid #45e451;
+}
+
+table{
+	margin-bottom: 50px;
+}
+
+td {
+	padding: 10px;
+}
+
+th {
+    padding: 10px;
+}
+
+
+nav {
+	margin-bottom: 25px;
+}
+
+nav a{
+    color: white;
+}
+
+.nav-pills {
+	margin-right: 30px;
+}
