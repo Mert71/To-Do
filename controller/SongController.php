@@ -1,13 +1,13 @@
 <?php
 
-require(ROOT . "model/SongModel.php");
+require(ROOT . "model/ListModel.php");
 
 function index()
 {
-	$songs = getAllSongs();
-	
+	$lists = getAllSongs();
+
 	render("song/index", array(
-		'songs' => $songs)
+		'lists' => $lists)
 	);
 }
 
@@ -24,25 +24,25 @@ function createSave()
 	} else {
 		//er is iets fout gegaan..
 		header("location:" . URL . "error/error_db");
-		exit();	
+		exit();
 	}
 }
 
 function read($id)
 {
-	$song = getSong($id);
+	$lists = getSong($id);
 
 	render("song/read", array(
-		"song" => $song
+		"lists" => $lists
 	));
 }
 
 function edit($id)
 {
-	$song = getSong($id);
+	$lists = getSong($id);
 
 	render("song/edit", array(
-		"song" => $song
+		"lists" => $lists
 	));
 }
 
@@ -65,6 +65,6 @@ function delete($id)
 	} else {
 		//er is iets fout gegaan..
 		header("location:" . URL . "error/error_delete");
-		exit();	
+		exit();
 	}
 }

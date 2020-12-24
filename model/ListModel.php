@@ -4,7 +4,7 @@ function getAllSongs()
 {
 	$db = openDatabaseConnection();
 
-	$sql = "SELECT * FROM song";
+	$sql = "SELECT * FROM lists";
 
 	$query = $db->prepare($sql);
 	$query->execute();
@@ -18,7 +18,7 @@ function getSong($id)
 {
 	$db = openDatabaseConnection();
 
-	$sql = "SELECT * FROM song WHERE song_id = :id LIMIT 1";
+	$sql = "SELECT * FROM lists WHERE lists_id = :id LIMIT 1";
 
 	$query = $db->prepare($sql);
 	$query->execute(array(
@@ -32,23 +32,19 @@ function getSong($id)
 
 function createSong()
 {
-	$artist = isset($_POST["artist"]) ? $_POST["artist"] : null;
-	$title = isset($_POST["title"]) ? $_POST["title"] : null;
-	$url = isset($_POST["url"]) ? $_POST["url"] : null;
-	
-	if ($artist === null || $title === null || $url === null) {
+	$lists_name = isset($_POST["lists_name"]) ? $_POST["lists_name"] : null;
+
+	if ($lists_name === null) {
 		return false;
 	}
 	//Database verbinding maken
 	$db = openDatabaseConnection();
 
-	$sql = "INSERT INTO song (song_artist, song_name, song_url) VALUES (:artist, :title, :url)";
+	$sql = "INSERT INTO lists (lists_name) VALUES (:lists_name)";
 
 	$query = $db->prepare($sql);
 	$query->execute(array(
-		":artist" => $artist,
-		":title" => $title,
-		":url" => $url 
+		":lists_name" => $lists_name
 	));
 
 	//Database verbinding sluiten
@@ -65,7 +61,8 @@ function deleteSong($id)
 
 	$db = openDatabaseConnection();
 
-	$sql = "DELETE FROM song WHERE song_id = :id";
+	$sql = "DELETE FROM tasks WHERE lists_id = :id;
+	DELETE FROM lists WHERE lists_id = :id;";
 
 	$query = $db->prepare($sql);
 	$query->execute(array(
@@ -79,19 +76,16 @@ function deleteSong($id)
 
 function editSong($id=null)
 {
-	$artist = isset($_POST["artist"]) ? $_POST["artist"] : null;
-	$title = isset($_POST["title"]) ? $_POST["title"] : null;
-	$url = isset($_POST["url"]) ? $_POST["url"] : null;
-	
-	if ($id === null || $artist === null || $title === null || $url === null) {
+	$lists_name = isset($_POST["lists_name"]) ? $_POST["lists_name"] : null;
+	$id = isset($_POST["id"]) ? $_POST["id"] : null;
+
+	if ($id === null || $lists_name === null) {
 		return false;
 	}
 
 	$db = openDatabaseConnection();
 
-	$sql = "UPDATE song 
-			SET song_artist = :artist, song_name = :title, song_url = :url 
-			WHERE song_id = :id";
+	$sql = "UPDATE lists SET lists_name = '$lists_name' WHERE lists_id = $id";
 
 	$query = $db->prepare($sql);
 

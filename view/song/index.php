@@ -1,24 +1,19 @@
 <div class="container">
 	<table border="1">
 		<tr>
-			<th>#</th>
-			<th>Artiest</th>
-			<th>Titel</th>
-			<th>Url</th>
-			<th colspan="2">Actie</th>
+			<th style="display: none;">#</th>
+			<th style="display: none;">Naam lijst</th>
+			<th colspan="2" style="display: none;">Actie</th>
 		</tr>
-		
-		<?php foreach ($songs as $song) {
+		<?php foreach ($lists as $list) {
 			echo "<tr>";
-			echo "<td>" . $song['song_id'] . "</td>";
-			echo "<td>" . $song['song_artist'] . "</td>";
-			echo "<td>" . $song['song_name'] . "</td>";
-			echo "<td><a href=\"" . $song['song_url'] .  "\">" . $song['song_url'] . "</a></td>";
-			echo "<td><a href=\"" . URL . "song/edit/" . $song['song_id'] . "\">Wijzigen</a></td>";
-			echo "<td><a href=\"" . URL . "song/delete/" . $song['song_id'] . "\">Verwijderen</a></td>";
+			echo "<td>" . $list['lists_id'] . "</td>";
+			echo "<td><a href=\"" . URL . "task/indexTasks/" . $list['lists_id'] . "\">" . $list['lists_name'] . "</a></td>";
+			echo "<td><a href=\"" . URL . "song/edit/" . $list['lists_id'] . "\">Edit</a></td>";
+			echo "<td><a href=\"" . URL . "song/delete/" . $list['lists_id'] . "\">Verwijderen</a></td>";
 			echo "</tr>";
 		}
 		?>
 	</table>
-	<a href="<?= URL ?>song/create">Nieuw lied toevoegen</a>
+	<a href="<?= URL ?>song/create">Nieuw lijst toevoegen</a>
 </div>
