@@ -51,3 +51,18 @@ function deleteTasks($id)
 		exit();
 	}
 }
+
+function editTasks($id)
+{
+	$tasks = getTask($id);
+
+	render("song/editTask", array(
+		"tasks" => $tasks
+	));
+}
+
+function editSaveTasks()
+{
+	editTask();
+	header("location:" . URL . "song/index");
+}
