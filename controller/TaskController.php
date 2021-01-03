@@ -12,3 +12,42 @@ function indexTasks($lists_id, $sort =0)
 		'sort' => $sort
 	));
 }
+
+function createTasks($lists_id)
+{
+	render("song/createTask", array(
+		'lists_id' =>  $lists_id
+	));
+}
+
+function createSaveTask()
+{
+	if (createNewTask()) {
+		header("location:" . URL . "song/index");
+		exit();
+	} else {
+		//er is iets fout gegaan..
+		header("location:" . URL . "error/error_db");
+		exit();
+	}
+}
+function readTasks($id)
+{
+	$tasks = getTasks($id);
+
+	render("song/read", array(
+		"tasks" => $tasks
+	));
+}
+
+function deleteTasks($id)
+{
+	if (deleteTask($id)) {
+		header("location:" . URL . "song/index");
+		exit();
+	} else {
+		//er is iets fout gegaan..
+		header("location:" . URL . "error/error_delete");
+		exit();
+	}
+}

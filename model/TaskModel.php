@@ -40,3 +40,53 @@ function getTask($id)
 
 	return $query->fetch();
 }
+
+function createNewTask()
+{
+	$tasks_name = isset($_POST["tasks_name"]) ? $_POST["tasks_name"] : null;
+	$description = isset($_POST["description"]) ? $_POST["description"] : null;
+	$lists_id = isset($_POST["lists_id"]) ? $_POST["lists_id"] : null;
+	$status = isset($_POST["status"]) ? $_POST["status"] : null;
+
+
+	if ($tasks_name === null || $description === null || $lists_id === null || $status === null) {
+		return false;
+	}
+	//Database verbinding maken
+	$db = openDatabaseConnection();
+
+	$sql = "INSERT INTO tasks (tasks_name, lists_id,  description, status ) VALUES (:tasks_name, :lists_id, :description, :status )";
+
+	$query = $db->prepare($sql);
+	$query->execute(array(
+		":tasks_name" => $tasks_name,
+		":lists_id" => $lists_id,
+		":description" => $description,
+		":status" => $status
+	));
+
+	//Database verbinding sluiten
+	$db = null;
+
+	return true;
+}
+
+function deleteTask($id)
+{
+	if ($id === '') {
+		return false;
+	}
+
+	$db = openDatabaseConnection();
+
+	$sql = "DELETE FROM tasks WHERE tasks_id = :id";
+
+	$query = $db->prepare($sql);
+	$query->execute(array(
+		":id" => $id
+	));
+
+	$db = null;
+
+	return true;
+}
