@@ -90,27 +90,3 @@ function deleteTask($id)
 
 	return true;
 }
-
-function editTask()
-{
-	$tasks_name = isset($_POST["tasks_name"]) ? $_POST["tasks_name"] : null;
-	$description = isset($_POST["description"]) ? $_POST["description"] : null;
-	$tasks_id = isset($_POST["tasks_id"]) ? $_POST["tasks_id"] : null;
-	$status = isset($_POST["status"]) ? $_POST["status"] : null;
-
-	$db = openDatabaseConnection();
-
-	$sql = "UPDATE tasks SET task_name = '$tasks_name', description = '$description', status = '$status' WHERE tasks_id = $tasks_id";
-
-	$query = $db->prepare($sql);
-	$query->execute(array(
-		":tasks_id" => $tasks_id,
-		":tasks_name" => $tasks_name,
-		":description" => $description,
-		":status" => $status
-	));
-
-	$db = null;
-
-	return true;
-}
