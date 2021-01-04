@@ -46,9 +46,9 @@ function edit($id)
 	));
 }
 
-function editSave($id)
+function editSave()
 {
-	if (editSong($id)) {
+	if (editSong()) {
 		header("location:" . URL . "song/index");
 		exit();
 	} else {
