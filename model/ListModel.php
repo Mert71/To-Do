@@ -1,5 +1,5 @@
 <?php
-
+// alle lists worden opgehaald van de database
 function getAllSongs()
 {
 	$db = openDatabaseConnection();
@@ -14,6 +14,7 @@ function getAllSongs()
 	return $query->fetchAll();
 }
 
+//1 lijst wordt opgehaald met ID
 function getSong($id)
 {
 	$db = openDatabaseConnection();
@@ -30,6 +31,7 @@ function getSong($id)
 	return $query->fetch();
 }
 
+// je kan een lijst aanmaken
 function createSong()
 {
 	$lists_name = isset($_POST["lists_name"]) ? $_POST["lists_name"] : null;
@@ -53,6 +55,7 @@ function createSong()
 	return true;
 }
 
+//Je kan een lijst deleten waarbij de listid overeenkomt met de id van de gekozen lijst
 function deleteSong($id)
 {
 	if ($id === '') {

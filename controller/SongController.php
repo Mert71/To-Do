@@ -1,7 +1,7 @@
 <?php
 
 require(ROOT . "model/ListModel.php");
-
+// alle lists worden opgehaald
 function index()
 {
 	$lists = getAllSongs();
@@ -10,12 +10,13 @@ function index()
 		'lists' => $lists)
 	);
 }
-
+//de create pagina wordt aangeroepen
 function create()
 {
 	render("song/create");
 }
 
+//instructies doorgegeven wat er gedaan moet worden na het aanmaken van een lijst
 function createSave()
 {
 	if (createSong()) {

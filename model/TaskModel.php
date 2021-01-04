@@ -1,6 +1,6 @@
 <?php
 
-//all tasks are being pulled from DB.
+//alle taken worden opgehaald van de Database
 function getAllTasks($lists_id, $sort)
 {
 	$db = openDatabaseConnection();
@@ -24,7 +24,7 @@ function getAllTasks($lists_id, $sort)
 	return $query->fetchAll();
 }
 
-//Get a single task
+//1 taak wordt opgehaald
 function getTask($id)
 {
 	$db = openDatabaseConnection();
@@ -90,6 +90,8 @@ function deleteTask($id)
 
 	return true;
 }
+
+// je kan een taak bewerken
 function editTask()
 {
 	$tasks_name = isset($_POST["tasks_name"]) ? $_POST["tasks_name"] : null;
