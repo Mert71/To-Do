@@ -1,26 +1,24 @@
 <?php
 
 //alle taken worden opgehaald van de Database
-function getAllTasks($lists_id, $sort)
+function getAllTasks($list_id, $sort)
 {
 	$db = openDatabaseConnection();
 
 	$sql = null;
 	if ($sort == 0) {
-		$sql = "SELECT * FROM tasks WHERE lists_id = :id ORDER BY status ASC";
+		$sql = "SELECT * FROM tasks WHERE list_id = :id ORDER BY status ASC";
 	}
 
 	if ($sort == 1) {
-		$sql = "SELECT * FROM tasks WHERE lists_id = :id ORDER BY status DESC";
+		$sql = "SELECT * FROM tasks WHERE list_id = :id ORDER BY status DESC";
 	}
-
 	$query = $db->prepare($sql);
 	$query->execute(array(
-		":id" => $lists_id
+		":id" => $list_id
 	));
 
 	$db = null;
-
 	return $query->fetchAll();
 }
 
@@ -29,45 +27,34 @@ function getTask($id)
 {
 	$db = openDatabaseConnection();
 
-	$sql = "SELECT * FROM tasks WHERE tasks_id = :id LIMIT 1";
-
+	$sql = "SELECT * FROM tasks WHERE task_id = :id LIMIT 1";
 	$query = $db->prepare($sql);
 	$query->execute(array(
 		":id" => $id
 	));
 
 	$db = null;
-
 	return $query->fetch();
 }
 
-function createNewTask()
+function createNewTask($task_name , $description , $list_id , $status)
 {
-	$tasks_name = isset($_POST["tasks_name"]) ? $_POST["tasks_name"] : null;
-	$description = isset($_POST["description"]) ? $_POST["description"] : null;
-	$lists_id = isset($_POST["lists_id"]) ? $_POST["lists_id"] : null;
-	$status = isset($_POST["status"]) ? $_POST["status"] : null;
-
-
-	if ($tasks_name === null || $description === null || $lists_id === null || $status === null) {
+	if ($task_name === null || $description === null || $list_id === null || $status === null) {
 		return false;
 	}
 	//Database verbinding maken
 	$db = openDatabaseConnection();
 
-	$sql = "INSERT INTO tasks (tasks_name, lists_id,  description, status ) VALUES (:tasks_name, :lists_id, :description, :status )";
-
+	$sql = "INSERT INTO tasks (task_name, list_id,  description, status ) VALUES (:task_name, :list_id, :description, :status )";
 	$query = $db->prepare($sql);
 	$query->execute(array(
-		":tasks_name" => $tasks_name,
-		":lists_id" => $lists_id,
+		":task_name" => $task_name,
+		":list_id" => $list_id,
 		":description" => $description,
 		":status" => $status
 	));
-
 	//Database verbinding sluiten
 	$db = null;
-
 	return true;
 }
 
@@ -79,39 +66,31 @@ function deleteTask($id)
 
 	$db = openDatabaseConnection();
 
-	$sql = "DELETE FROM tasks WHERE tasks_id = :id";
-
+	$sql = "DELETE FROM tasks WHERE task_id = :id";
 	$query = $db->prepare($sql);
 	$query->execute(array(
 		":id" => $id
 	));
 
 	$db = null;
-
 	return true;
 }
 
 // je kan een taak bewerken
-function editTask()
+function editTask($task_name , $description , $task_id , $status)
 {
-	$tasks_name = isset($_POST["tasks_name"]) ? $_POST["tasks_name"] : null;
-	$description = isset($_POST["description"]) ? $_POST["description"] : null;
-	$tasks_id = isset($_POST["tasks_id"]) ? $_POST["tasks_id"] : null;
-	$status = isset($_POST["status"]) ? $_POST["status"] : null;
 
 	$db = openDatabaseConnection();
 
-	$sql = "UPDATE tasks SET tasks_name = '$tasks_name', description = '$description', status = '$status' WHERE tasks_id = $tasks_id";
-
+	$sql = "UPDATE tasks SET task_name = '$task_name', description = '$description', status = '$status' WHERE task_id = $task_id";
 	$query = $db->prepare($sql);
 	$query->execute(array(
-		":tasks_id" => $tasks_id,
-		":tasks_name" => $tasks_name,
+		":task_id" => $task_id,
+		":task_name" => $task_name,
 		":description" => $description,
 		":status" => $status
 	));
 
 	$db = null;
-
 	return true;
 }

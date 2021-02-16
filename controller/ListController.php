@@ -4,23 +4,23 @@ require(ROOT . "model/ListModel.php");
 // alle lists worden opgehaald
 function index()
 {
-	$lists = getAllSongs();
+	$lists = getAllLists();
 
-	render("song/index", array(
+	render("list/index", array(
 		'lists' => $lists)
 	);
 }
 //de create pagina wordt aangeroepen
 function create()
 {
-	render("song/create");
+	render("list/create");
 }
 
 //instructies doorgegeven wat er gedaan moet worden na het aanmaken van een lijst
 function createSave()
 {
-	if (createSong()) {
-		header("location:" . URL . "song/index");
+	if (createList($list_name = $_POST["list_name"])) {
+		header("location:" . URL . "list/index");
 		exit();
 	} else {
 		//er is iets fout gegaan..
@@ -31,37 +31,39 @@ function createSave()
 
 function read($id)
 {
-	$lists = getSong($id);
+	$lists = getList($id);
 
-	render("song/read", array(
+	render("list/read", array(
 		"lists" => $lists
 	));
 }
 
+//Go to the edit.php with the desired 'list'
 function edit($id)
 {
-	$lists = getSong($id);
+	$lists = getList($id);
 
-	render("song/edit", array(
+	render("list/edit", array(
 		"lists" => $lists
 	));
 }
 
+//What to do after pressing save
 function editSave()
 {
-	if (editSong()) {
-		header("location:" . URL . "song/index");
+	if (editList($list_name = $_POST["list_name"] , $id = $_POST["id"])) {
+		header("location:" . URL . "list/index");
 		exit();
 	} else {
-		header("location:" . URL . "error/error_404");
+		header("location:" . URL . "error/error_DB");
 		exit();
 	}
 }
 
 function delete($id)
 {
-	if (deleteSong($id)) {
-		header("location:" . URL . "song/index");
+	if (deleteList($id)) {
+		header("location:" . URL . "list/index");
 		exit();
 	} else {
 		//er is iets fout gegaan..

@@ -2,28 +2,28 @@
 
 require(ROOT . "model/TaskModel.php");
 
-function indexTasks($lists_id, $sort =0)
+function indexTasks($list_id, $sort =0)
 {
-	$tasks = getAllTasks($lists_id, $sort);
+	$tasks = getAllTasks($list_id, $sort);
 
-	render("song/indexTask", array(
+	render("list/indexTask", array(
 		'tasks' => $tasks,
-		'lists_id' => $lists_id,
+		'list_id' => $list_id,
 		'sort' => $sort
 	));
 }
 
-function createTasks($lists_id)
+function createTasks($list_id)
 {
-	render("song/createTask", array(
-		'lists_id' =>  $lists_id
+	render("list/createTask", array(
+		'list_id' =>  $list_id
 	));
 }
 
 function createSaveTask()
 {
-	if (createNewTask()) {
-		header("location:" . URL . "song/index");
+	if (createNewTask($task_name = $_POST["task_name"] , $description = $_POST["description"] , $list_id = $_POST["list_id"] , $status = $_POST["status"])) {
+		header("location:" . URL . "list/index");
 		exit();
 	} else {
 		//er is iets fout gegaan..
@@ -35,7 +35,7 @@ function readTasks($id)
 {
 	$tasks = getTasks($id);
 
-	render("song/read", array(
+	render("list/read", array(
 		"tasks" => $tasks
 	));
 }
@@ -43,7 +43,7 @@ function readTasks($id)
 function deleteTasks($id)
 {
 	if (deleteTask($id)) {
-		header("location:" . URL . "song/index");
+		header("location:" . URL . "list/index");
 		exit();
 	} else {
 		//er is iets fout gegaan..
@@ -55,13 +55,13 @@ function deleteTasks($id)
 function editTasks($id)
 {
 	$tasks = getTask($id);
-	render("song/editTask", array(
+	render("list/editTask", array(
 		"tasks" => $tasks
 	));
 }
 
 function editSaveTasks()
 {
-	editTask();
-	header("location:" . URL . "song/index");
+	editTask($task_name = $_POST["task_name"] , $description = $_POST["description"] , $task_id = $_POST["task_id"] , $status = $_POST["status"]);
+	header("location:" . URL . "list/index");
 }

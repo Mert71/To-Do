@@ -1,6 +1,6 @@
 <?php
 // alle lists worden opgehaald van de database
-function getAllSongs()
+function getAllLists()
 {
 	$db = openDatabaseConnection();
 
@@ -10,53 +10,47 @@ function getAllSongs()
 	$query->execute();
 
 	$db = null;
-
 	return $query->fetchAll();
 }
 
 //1 lijst wordt opgehaald met ID
-function getSong($id)
+function getList($id)
 {
 	$db = openDatabaseConnection();
 
-	$sql = "SELECT * FROM lists WHERE lists_id = :id LIMIT 1";
-
+	$sql = "SELECT * FROM lists WHERE list_id = :id LIMIT 1";
 	$query = $db->prepare($sql);
 	$query->execute(array(
 		":id" => $id
 	));
 
 	$db = null;
-
 	return $query->fetch();
 }
 
 // je kan een lijst aanmaken
-function createSong()
+function createList($list_name)
 {
-	$lists_name = isset($_POST["lists_name"]) ? $_POST["lists_name"] : null;
 
-	if ($lists_name === null) {
+	if ($list_name === null) {
 		return false;
 	}
 	//Database verbinding maken
 	$db = openDatabaseConnection();
 
-	$sql = "INSERT INTO lists (lists_name) VALUES (:lists_name)";
-
+	$sql = "INSERT INTO lists (list_name) VALUES (:list_name)";
 	$query = $db->prepare($sql);
 	$query->execute(array(
-		":lists_name" => $lists_name
+		":list_name" => $list_name
 	));
 
 	//Database verbinding sluiten
 	$db = null;
-
 	return true;
 }
 
 //Je kan een lijst deleten waarbij de listid overeenkomt met de id van de gekozen lijst
-function deleteSong($id)
+function deleteList($id)
 {
 	if ($id === '') {
 		return false;
@@ -64,32 +58,27 @@ function deleteSong($id)
 
 	$db = openDatabaseConnection();
 
-	$sql = "DELETE FROM tasks WHERE lists_id = :id;
-	DELETE FROM lists WHERE lists_id = :id;";
-
+	$sql = "DELETE FROM tasks WHERE list_id = :id;
+	DELETE FROM lists WHERE list_id = :id;";
+	
 	$query = $db->prepare($sql);
 	$query->execute(array(
 		":id" => $id
 	));
 
 	$db = null;
-
 	return true;
 }
 
-function editSong($id=null)
+function editList($list_name , $id)
 {
-	$lists_name = isset($_POST["lists_name"]) ? $_POST["lists_name"] : null;
-	$id = isset($_POST["id"]) ? $_POST["id"] : null;
-
-	if ($id === null || $lists_name === null) {
+	if ($id === null || $list_name === null) {
 		return false;
 	}
 
 	$db = openDatabaseConnection();
 
-	$sql = "UPDATE lists SET lists_name = '$lists_name' WHERE lists_id = $id";
-
+	$sql = "UPDATE lists SET list_name = '$list_name' WHERE list_id = $id";
 	$query = $db->prepare($sql);
 
 	$query->execute(array(
@@ -100,6 +89,5 @@ function editSong($id=null)
 	));
 
 	$db = null;
-
 	return true;
 }

@@ -12,6 +12,6 @@
 	<nav class="bg-primary">
 	<ul class="nav nav-pills">
 		<li class="nav-item"><a class="nav-link" href="<?= URL ?>home/index">Home</a></li>
-		<li class="nav-item"><a class="nav-link" href="<?= URL ?>song/index">Lijsten</a></li>
+		<li class="nav-item"><a class="nav-link" href="<?= URL ?>list/index">List</a></li>
 	</ul>
 	</nav>
