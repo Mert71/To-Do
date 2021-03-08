@@ -37,6 +37,7 @@ function getTask($id)
 	return $query->fetch();
 }
 
+//Een nieuwe taak aanmaken met een naam, description en status
 function createNewTask($task_name , $description , $list_id , $status)
 {
 	if ($task_name === null || $description === null || $list_id === null || $status === null) {
@@ -58,6 +59,7 @@ function createNewTask($task_name , $description , $list_id , $status)
 	return true;
 }
 
+//Verwijder task waarvan id gelijk is aan taskid
 function deleteTask($id)
 {
 	if ($id === '') {

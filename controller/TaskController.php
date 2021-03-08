@@ -13,6 +13,7 @@ function indexTasks($list_id, $sort =0)
 	));
 }
 
+//Tasks rendering createtask.php 
 function createTasks($list_id)
 {
 	render("list/createTask", array(
@@ -20,6 +21,7 @@ function createTasks($list_id)
 	));
 }
 
+//Saving the inputs in createtask.php
 function createSaveTask()
 {
 	if (createNewTask($task_name = $_POST["task_name"] , $description = $_POST["description"] , $list_id = $_POST["list_id"] , $status = $_POST["status"])) {
@@ -31,6 +33,7 @@ function createSaveTask()
 		exit();
 	}
 }
+
 function readTasks($id)
 {
 	$tasks = getTasks($id);
@@ -40,6 +43,7 @@ function readTasks($id)
 	));
 }
 
+//Deleting tasks
 function deleteTasks($id)
 {
 	if (deleteTask($id)) {
@@ -52,6 +56,7 @@ function deleteTasks($id)
 	}
 }
 
+//opens editTask.php
 function editTasks($id)
 {
 	$tasks = getTask($id);
@@ -60,6 +65,7 @@ function editTasks($id)
 	));
 }
 
+//Saves the inputs into tasks
 function editSaveTasks()
 {
 	editTask($task_name = $_POST["task_name"] , $description = $_POST["description"] , $task_id = $_POST["task_id"] , $status = $_POST["status"]);
